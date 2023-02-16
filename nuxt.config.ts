@@ -1,11 +1,16 @@
-module.exports = {
+import { NuxtConfig } from '@nuxt/types';
+
+const config: NuxtConfig = {
   // ...
   serverMiddleware: [
-    // Tässä lisätään Express.js -sovellus serverMiddleware -kenttään.
     {
-      path: '/api',
-      handler: '~/server.js',
+      // Tässä määritellään polku, joka vastaa Express-sovelluksen juuripolkua
+      path: '/',
+      // Huomaa, että polku `./` viittaa root-kansioon
+      handler: './server.js',
     },
   ],
   // ...
 };
+
+export default config;
