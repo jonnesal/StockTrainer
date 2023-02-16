@@ -1,4 +1,6 @@
+
 module.exports = {
+
   // ...
   serverMiddleware: [
     // Tässä lisätään Express.js -sovellus serverMiddleware -kenttään.
@@ -9,3 +11,8 @@ module.exports = {
   ],
   // ...
 };
+
+module.exports = {
+  mode: 'universal', // or 'spa' for a single-page application
+  // other config options here...
+}
