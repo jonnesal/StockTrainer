@@ -1,11 +1,20 @@
-module.exports = {
-  // ...
-  serverMiddleware: [
-    // Tässä lisätään Express.js -sovellus serverMiddleware -kenttään.
-    {
-      path: '/api',
-      handler: '~/server.js',
-    },
+export default {
+
+  modules: [
+    '@nuxtjs/tailwindcss',
+    'postcss-custom-properties',
+    'nuxt-icon',
+    '@nuxtjs/google-fonts'
   ],
-  // ...
-};
+
+  googleFonts: {
+    families: {
+      'Ubuntu Mono': true
+    }
+  },
+
+  serverMiddleware: [
+    { path: '/', handler: '~/api/index.js' }
+  ]
+
+}
