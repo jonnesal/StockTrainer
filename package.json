@@ -10,6 +10,7 @@
     "@nuxt/ui": "^0.3.3",
     "@nuxtjs/google-fonts": "^3.0.0-1",
     "@nuxtjs/tailwindcss": "^6.4.1",
+    "@sidebase/nuxt-auth": "^0.4.2",
     "nuxt": "^3.0.0",
     "nuxt-icon": "^0.3.2",
     "postcss-custom-properties": "^13.1.4",

@@ -1,10 +1,11 @@
-export default {
+export default defineNuxtConfig({
 
   modules: [
     '@nuxtjs/tailwindcss',
     'postcss-custom-properties',
     'nuxt-icon',
-    '@nuxtjs/google-fonts'
+    '@nuxtjs/google-fonts',
+    '@sidebase/nuxt-auth',
   ],
 
   googleFonts: {
@@ -13,8 +14,12 @@ export default {
     }
   },
 
-  serverMiddleware: [
-    { path: '/', handler: '~/api/index.js' }
-  ]
+  typescript: {
+    shim: false
+  },
 
-}
+  /* serverMiddleware: [
+     path: '/', handler: '~/server/api/index.js' 
+  ] */
+
+})
