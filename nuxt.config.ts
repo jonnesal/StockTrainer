@@ -13,13 +13,22 @@ export default defineNuxtConfig({
       'Ubuntu Mono': true
     }
   },
+  nitro: {
+    devProxy: {
+      "/testi": {
+        target:"http://localhost:3001",
+        changeOrigin: true,
+        prependPath: true,
+      }
+    }
+  },
 
   typescript: {
     shim: false
   },
 
   /* serverMiddleware: [
-     path: '/', handler: '~/server/api/index.js' 
+     path: '/', handler: '~/server/api/index.js'
   ] */
 
 })
