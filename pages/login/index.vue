@@ -16,9 +16,9 @@
                 <div>
                     <input :type="loginFieldType" v-model="loginPassword" spellcheck="false" autocomplete="off"
                     class="bg-primarybackground w-80 h-9 rounded-xl text-center pr-12" required>
-                    <button @click="toggleLoginPassword" class="absolute -ml-10">
+                    <span @click="toggleLoginPassword" class="absolute -ml-10">
                       <Icon :name="`${loginEyeIcon}`"></Icon>
-                    </button>
+                    </span>
                 </div>
                 <br>
                 <button @click="signIn('credentials', { username: loginUsername, password: loginPassword })">
@@ -36,9 +36,9 @@
                 <div>
                     <input :type="registerFieldType" v-model="registerPassword" spellcheck="false" autocomplete="off"
                     class="bg-primarybackground w-80 h-9 rounded-xl text-center pr-12" required>
-                    <button @click="toggleRegisterPassword" class="absolute -ml-10">
+                    <span @click="toggleRegisterPassword" class="absolute -ml-10">
                       <Icon :name="`${registerEyeIcon}`"></Icon>
-                    </button>
+                    </span>
                 </div>
                 <br>
                 <button @click="signIn('credentials', { username: registerUsername, password: registerPassword })">
@@ -80,13 +80,10 @@ export default {
       this.registerFieldType = this.registerFieldType == "text" ? "password" : "text";
     },
   },
-  mounted(){
-   this.fieldType = this.type;
-  }
 };
+</script>
 
-definePageMeta({ auth: false })
-
+<script setup>
 const { signIn } = useSession()
 </script>
 
