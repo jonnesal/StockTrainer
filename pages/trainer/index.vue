@@ -7,6 +7,7 @@
 </template>
 
 <script setup>
+
 useHead ({
     title: "Trainer | StockTrainer",
     meta: [
