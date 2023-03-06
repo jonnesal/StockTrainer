@@ -1,17 +1,12 @@
 <template>
   <div class="chart-wrapper">
-    <div class="chart-container">
+    <div class="chart-container" style="position: relative; height:41vh; width:80vw">
       <LineChart :chart-data="data" :options="options" />
     </div>
     <div class="controls">
-      <button @click="updateData" class="btn">Update Data</button>
-      <ul class="lines">
-        <li v-for="(value, index) in dataValues" :key="index">{{ value }}</li>
-      </ul>
     </div>
   </div>
 </template>
-
 <script setup>
 import { LineChart } from 'vue-chart-3';
 import {
@@ -31,9 +26,22 @@ Chart.register(
   LineElement
 );
 
-const dataValues = ref([12, 14, 16, 18, 11, 13, 15]);
+let users1 = await useFetch('http://localhost:3001/testi/api');
+const users = users1.data._value;
+const currentTime = new Date();
+const timeList = [];
+
+for (let i = 30; i >= 1; i--) {
+  const time = new Date(currentTime.getTime() - i * 60 * 1000);
+  const formattedTime = time.toLocaleString('default', { hour: 'numeric', minute: 'numeric' });
+  timeList.push(formattedTime);
+}
+
+
+const dataValues = ref(users);
+
 const data = computed(() => ({
-  labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  labels: timeList,
   datasets: [
     {
       label: 'Foo',
@@ -43,27 +51,48 @@ const data = computed(() => ({
     },
   ],
 }));
+
 const options = ref({
   plugins: {
     title: {
       text: 'Line',
       color: '#fff',
     },
+    tooltip: {
+      enabled: true,
+      intersect: false,
+      mode: 'index',
+      callbacks: {
+        label: function(tooltipItem) {
+          const yLabel = tooltipItem.yLabel.toString();
+          return yLabel;
+        }
+      }
+    }
   },
 });
 
+//Joskus lista on olemassa ja jokus ei???? joten if()checkkaa olemassa olon
 const addLine = (value) => {
   const list = document.querySelector('.lines');
-  const line = document.createElement('li');
-  line.textContent = value;
-  list.appendChild(line);
+  if (list) {
+    const line = document.createElement('li');
+    line.textContent = value;
+    list.appendChild(line);
+  }
 };
 
-const updateData = () => {
-  dataValues.value = dataValues.value.map((value) => value + Math.floor(Math.random() * 10));
-  addLine(dataValues.value[dataValues.value.length - 1]);
-};
+// Fetch data every 10 seconds
+/*setInterval(() => {
+  useFetch('http://localhost:3001/testi/api')
+    .then(res => {
+      dataValues.value = res.data._value;
+      addLine(dataValues.value[dataValues.value.length - 1]);
+    })
+    .catch(error => console.log(error));
+}, 3000000);
 
+ */
 </script>
 
 <style scoped>
@@ -94,12 +123,6 @@ const updateData = () => {
   border-radius: 10px;
   padding: 5px 10px;
   cursor: pointer;
-}
-
-.lines {
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 .lines li {
