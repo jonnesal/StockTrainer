@@ -12,12 +12,6 @@ app.get('/testi/users', (req, res) => {
   ]
   res.json(users)
 })
-app.get('/testi/data', (req, res) => {
-  const { data } = req.body;
-  console.log(data);
-  // Do something with the data
-  res.sendStatus(200);
-});
 
 app.get('/testi/api',async (req, res) => {
 
@@ -37,8 +31,25 @@ app.get('/testi/api',async (req, res) => {
     .then(response => {
       const data = response.data;
       const price = data.chart.result[0].indicators.quote[0].close;
-      console.log(price);
-      res.json(price);
+      //Jos haet tätä stockmarkertin sulkeutumisen jälkeen niin saat nämä basic arvot
+      if(price === undefined) {
+        let emt;
+        emt = [7899.31982421875, 7899.97998046875,
+          7900.43017578125, 7902.0498046875,
+          7902.93994140625, 7903.18017578125,
+          7903.83984375,    7903.85986328125,
+          7904.3701171875,  7903.919921875,
+          7904.22021484375, 7904.58984375,
+          7903.9599609375,  7904.490234375,
+          null,             7904.2998046875]
+
+
+        res.json(emt);
+        console.log(emt);
+      }else{
+        res.json(price);
+      }
+
     })
     .catch(error => {
       console.log(error);

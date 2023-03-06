@@ -1,12 +1,25 @@
 <template>
-  <div class="chart-wrapper">
+  <div style="display: flex;">
     <div class="chart-container" style="position: relative; height:41vh; width:80vw">
+      <h2 style="margin-bottom: 10px;font-size: 16px">FTSE 100</h2>
       <LineChart :chart-data="data" :options="options" />
+      <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+          <label for="itemName" style="margin-bottom: 5px;">Buy And Sell:</label>
+          <input type="text" id="itemName" v-model="newItem" style="margin-bottom: 10px;">
+        </div>
+        <div style="display: flex; justify-content: space-between; width: 200px;">
+          <button style="background-color: #dc322f; color: white; border: none; padding: 10px; font-size: 16px; width: 100px;height: 50px" @click="sell()">Sell</button>
+          <button style="background-color: darkgreen; color: white; border: none; padding: 10px; font-size: 16px; width: 100px;height: 50px " @click="buy()">Buy</button>
+        </div>
+      </div>
     </div>
-    <div class="controls">
-    </div>
+    <ul style="padding: 10px; width: 30%;">
+      <li v-for="(item, index) in listItems" :key="index" style="border: 1px solid black; font-size: 24px;">{{ item }}</li>
+    </ul>
   </div>
 </template>
+
 <script setup>
 import { LineChart } from 'vue-chart-3';
 import {
@@ -37,8 +50,15 @@ for (let i = 30; i >= 1; i--) {
   timeList.push(formattedTime);
 }
 
-
 const dataValues = ref(users);
+
+const lastValue = computed(() => {
+  if (dataValues.value.length > 0) {
+    return dataValues.value[dataValues.value.length - 1];
+  } else {
+    return null;
+  }
+});
 
 const data = computed(() => ({
   labels: timeList,
@@ -72,59 +92,31 @@ const options = ref({
   },
 });
 
-//Joskus lista on olemassa ja jokus ei???? joten if()checkkaa olemassa olon
-const addLine = (value) => {
-  const list = document.querySelector('.lines');
-  if (list) {
-    const line = document.createElement('li');
-    line.textContent = value;
-    list.appendChild(line);
+const listItems = ref(["Bought and sold stocks"]);
+
+function buy() {
+
+  const newItem = `Bought at ${lastValue.value.toFixed(2)}`;
+
+  listItems.value.push(newItem);
+  if(listItems.value.length >= 10) {
+    listItems.value.pop();
   }
-};
+}
 
-// Fetch data every 10 seconds
-/*setInterval(() => {
-  useFetch('http://localhost:3001/testi/api')
-    .then(res => {
-      dataValues.value = res.data._value;
-      addLine(dataValues.value[dataValues.value.length - 1]);
-    })
-    .catch(error => console.log(error));
-}, 3000000);
+function sell() {
 
- */
+  const newItem = `Sold at at -${lastValue.value.toFixed(2)}`;
+
+  listItems.value.push(newItem);
+  if(listItems.value.length >= 10) {
+    listItems.value.pop();
+  }
+
+}
 </script>
 
 <style scoped>
-.chart-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  background-color: #333;
-}
-
-.chart-container {
-  flex: 1;
-  max-width: 700px;
-}
-
-.controls {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.btn {
-  margin-bottom: 10px;
-  background-color: #fff;
-  color: #333;
-  border: none;
-  border-radius: 10px;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
 .lines li {
   color: #fff;
   margin-bottom: 5px;
