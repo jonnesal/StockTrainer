@@ -5,12 +5,22 @@ const app = express()
 
 app.use(cors());
 // Define a simple API route
-app.get('/testi/users', (req, res) => {
-  const users = [
+app.get('/testi/example', (req, res) => {
+  const testi = [
     { id: 1, name: 'John Doe' },
     { id: 2, name: 'Jane Smith' }
   ]
-  res.json(users)
+  res.json(testi)
+})
+
+app.post('/testi/users', (req, res) => {
+  let body = req.body
+  console.log(body)
+})
+
+app.get('/testi/users', (req, res) => {
+  let body = req.body
+  console.log(body)
 })
 
 app.get('/testi/api',async (req, res) => {

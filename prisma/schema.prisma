@@ -9,23 +9,23 @@ datasource db {
 
 model portfolio {
   id           Int     @id @default(autoincrement())
-  user_id      Int?
   stock_owned  String  @db.VarChar(50)
-  shares_owned Decimal @db.Decimal(10, 2)
-  buy_price    Decimal @db.Decimal(10, 2)
-  user         user?  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  shares_owned Int
+  buy_price    Decimal @db.Decimal(10, 3)
+  user_id      Int?
+  user         user?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model stocks {
   id          Int     @id @default(autoincrement())
   stock_name  String  @db.VarChar(50)
-  share_price Decimal @db.Decimal(10, 2)
+  share_price Decimal @db.Decimal(10, 3)
 }
 
 model user {
   id              Int         @id @default(autoincrement())
-  username        String      @db.VarChar(50)
+  username        String      @unique @db.VarChar(50)
   password        String      @db.VarChar(255)
-  available_money Decimal?    @db.Decimal(10, 2)
+  available_money Decimal     @default(10000) @db.Decimal(10, 3)
   portfolio       portfolio[]
 }
