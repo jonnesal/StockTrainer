@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model portfolio {
+  id           Int     @id @default(autoincrement())
+  user_id      Int?
+  stock_owned  String  @db.VarChar(50)
+  shares_owned Decimal @db.Decimal(10, 2)
+  buy_price    Decimal @db.Decimal(10, 2)
+  user         user?  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model stocks {
+  id          Int     @id @default(autoincrement())
+  stock_name  String  @db.VarChar(50)
+  share_price Decimal @db.Decimal(10, 2)
+}
+
+model user {
+  id              Int         @id @default(autoincrement())
+  username        String      @db.VarChar(50)
+  password        String      @db.VarChar(255)
+  available_money Decimal?    @db.Decimal(10, 2)
+  portfolio       portfolio[]
+}

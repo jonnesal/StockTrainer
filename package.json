@@ -15,9 +15,11 @@
     "nuxt-icon": "^0.3.2",
     "postcss-custom-properties": "^13.1.4",
     "prettier": "^2.8.4",
-    "prettier-plugin-tailwindcss": "^0.2.3"
+    "prettier-plugin-tailwindcss": "^0.2.3",
+    "prisma": "^4.11.0"
   },
   "dependencies": {
+    "@prisma/client": "^4.11.0",
     "cors": "^2.8.5",
     "express": "^4.18.2"
   }

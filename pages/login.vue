@@ -59,42 +59,36 @@
     </div>
 </template>
 
-<script setup>
-definePageMeta ({
-    title: "Login | StockTrainer",
-    meta: [
-      	{ name: 'description', content: "Learn to manage, buy and sell stocks without risk!" }
-    ],
-})
+<script setup lang="ts">
 
-const { status, signOut, signIn } = useSession()
-</script>
+    useHead({
+        title: "Login | StockTrainer",
+        meta: [
+            { name: 'description', content: "Learn to manage, buy and sell stocks without risk!" }
+        ],
+    })
 
-<script>
-export default {
-  	data() {
-		return {
-			registerUsername: "",
-			registerPassword: "",
-			loginUsername: "",
-			loginPassword: "",
-			loginEyeIcon: "mingcute:eye-2-fill",
-			registerEyeIcon: "mingcute:eye-2-fill",
-			loginFieldType: "password",
-			registerFieldType: "password"
-		};
-  	},
-  	methods: {
-		toggleLoginPassword() {
-			this.loginEyeIcon = this.loginEyeIcon == "mingcute:eye-2-fill" ? "mingcute:eye-close-line" : "mingcute:eye-2-fill";
-			this.loginFieldType = this.loginFieldType == "text" ? "password" : "text";
-		},
-		toggleRegisterPassword() {
-			this.registerEyeIcon = this.registerEyeIcon == "mingcute:eye-2-fill" ? "mingcute:eye-close-line" : "mingcute:eye-2-fill";
-			this.registerFieldType = this.registerFieldType == "text" ? "password" : "text";
-		},
-  	},
-};
+    const { status, signOut, signIn } = useSession()
+
+    const registerUsername = ref("")
+    const registerPassword = ref("")
+    const loginUsername = ref("")
+    const loginPassword = ref("")
+    const loginEyeIcon = ref("mingcute:eye-2-fill")
+    const registerEyeIcon = ref("mingcute:eye-2-fill")
+    const loginFieldType = ref("password")
+    const registerFieldType = ref("password")
+
+    function toggleLoginPassword() {
+    loginEyeIcon.value = loginEyeIcon.value == "mingcute:eye-2-fill" ? "mingcute:eye-close-line" : "mingcute:eye-2-fill"
+    loginFieldType.value = loginFieldType.value == "text" ? "password" : "text"
+    }
+
+    function toggleRegisterPassword() {
+    registerEyeIcon.value = registerEyeIcon.value == "mingcute:eye-2-fill" ? "mingcute:eye-close-line" : "mingcute:eye-2-fill"
+    registerFieldType.value = registerFieldType.value == "text" ? "password" : "text"
+    }
+    
 </script>
 
 <style scoped>
