@@ -1,5 +1,5 @@
 <template>
-    <div class="font-mono fixed top-0 left-0 h-screen w-36 m-0 flex flex-col bg-secondarybackground text-lighttext text-center text-3xl pt-10 gap-14">
+    <div class="font-mono fixed top-0 left-0 h-screen w-36 m-0 flex flex-col bg-secondarybackground text-lighttext text-center text-3xl pt-10 gap-14 z-50">
         <NuxtLink to="/">
             <span class="group">
                 <Icon name="material-symbols:waterfall-chart-rounded" size="3em"

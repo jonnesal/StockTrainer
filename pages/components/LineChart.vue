@@ -1,21 +1,21 @@
 <template>
-  <div style="display: flex;">
-    <div class="chart-container" style="position: relative; height:41vh; width:80vw">
-      <h2 style="margin-bottom: 10px;font-size: 16px">FTSE 100</h2>
-      <LineChart :chart-data="data" :options="options" />
+  <div style="display: flex;" class="text-lighttext text-3xl">
+    <div class="chart-container bg-primarybackground rounded-xl" style="position: relative; height:41vh; width:80vw">
+      <h2 class="text-3xl border-2 border-b-0 rounded-xl rounded-b-none">FTSE 100</h2>
+      <LineChart :chart-data="data" :options="options" class="bg-primarybackground border-2 border-t-0 rounded-xl rounded-t-none"/>
       <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-        <div style="display: flex; flex-direction: column; align-items: center;">
-          <label for="itemName" style="margin-bottom: 5px;">Buy And Sell:</label>
-          <input type="text" id="itemName" v-model="newItem" style="margin-bottom: 10px;">
+        <div style="display: flex; flex-direction: column; align-items: center;" class="pt-5">
+          <label for="itemName" style="margin-bottom: 5px;">Amount</label>
+          <input type="text" id="itemName" v-model="newItem" style="margin-bottom: 10px;" class="border-lighttext border-2 text-center rounded-xl bg-primarybackground hover:bg-buttonbackground transition-colors duration-150">
         </div>
-        <div style="display: flex; justify-content: space-between; width: 200px;">
-          <button style="background-color: #dc322f; color: white; border: none; padding: 10px; font-size: 16px; width: 100px;height: 50px" @click="sell()">Sell</button>
-          <button style="background-color: darkgreen; color: white; border: none; padding: 10px; font-size: 16px; width: 100px;height: 50px " @click="buy()">Buy</button>
+        <div style="display: flex; justify-content: space-between; width: 200px;" class="gap-2">
+          <button class="bg-green-700 rounded-xl border-2" style="color: white; width: 100px;height: 50px " @click="buy()">Buy</button>
+          <button class="bg-red-700 rounded-xl border-2" style="color: white; width: 100px;height: 50px" @click="sell()">Sell</button>
         </div>
       </div>
     </div>
-    <ul style="padding: 10px; width: 30%;">
-      <li v-for="(item, index) in listItems" :key="index" style="border: 1px solid black; font-size: 24px;">{{ item }}</li>
+    <ul style="width: 40%;" class="pl-10">
+      <li v-for="(item, index) in listItems" :key="index" style="font-size: 24px;" class="border-2 bg-primarybackground rounded-xl">{{ item }}</li>
     </ul>
   </div>
 </template>
@@ -40,7 +40,7 @@ Chart.register(
 );
 
 let users1 = await useFetch('http://localhost:3001/testi/api');
-const users = users1.data._value;
+const users = users1.data.value;
 const currentTime = new Date();
 const timeList = [];
 
@@ -93,6 +93,7 @@ const options = ref({
 });
 
 const listItems = ref(["Bought and sold stocks"]);
+const newItem = ref()
 
 function buy() {
 
