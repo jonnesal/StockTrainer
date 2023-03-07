@@ -13,15 +13,18 @@ export default NuxtAuthHandler({
         password: { label: 'Password', type: 'password'}
       },
       async authorize(credentials: any) {
-        const user = await prisma.user.findMany({
+        const user = await prisma.user.findUnique({
           where: {
-            username: credentials.username,
-            password: credentials.password
+            username: credentials.username
           },
+          select: {
+            username: true,
+            password: true
+          }
         })
       
-        if (user.length > 0) {
-          return user[0]
+        if (credentials.username === user!.username &&  credentials.password === user!.password) {
+          return user
         } else {
           console.error('Warning: Malicious login attempt registered, bad credentials provided')
           return null
