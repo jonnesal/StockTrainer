@@ -1,5 +1,8 @@
 <template>
-    <div class="grid grid-cols-3 min-h-screen items-center justify-items-center text-center text-lighttext text-3xl select-none">
+    <div v-if="status === 'authenticated'" class="flex flex-col justify-center min-h-screen items-center text-center text-lighttext gap-3">
+        <p class="text-6xl">Successfully logged in!</p>
+    </div>
+    <div v-else class="grid grid-cols-2 min-h-screen items-center justify-items-center text-center text-lighttext text-3xl select-none">
         <div class="flex flex-col justify-center text-lighttext bg-secondarybackground ml-96 p-5 rounded-3xl">
             <p><u>Login</u></p>
             <br>
@@ -10,7 +13,7 @@
                 <div>
                     <input :type="loginFieldType" v-model="loginPassword" spellcheck="false" autocomplete="off"
                     class="bg-primarybackground w-80 h-9 rounded-xl text-center pr-12" required>
-                    <span @click="toggleLoginPassword" class="absolute -ml-10">
+                    <span @click="toggleLoginPassword" class="absolute -ml-10 cursor-pointer">
                       	<Icon :name="`${loginEyeIcon}`"></Icon>
                     </span>
                 </div>
@@ -19,16 +22,6 @@
                   	<span class="border-lighttext border-2 p-2 rounded-xl bg-primarybackground hover:bg-buttonbackground transition-colors duration-150">Login</span>
                 </button>
             </form>
-        </div>
-        <div>
-			<button v-if="status === 'authenticated'" class="flex items-center justify-center space-x-2 bg-red-500 text-white rounded-lg py-2 px-3 text-lg" @click="signOut({ callbackUrl: '/' })">
-			<span>Logout</span>
-			</button>
-			<button v-else class="flex items-center justify-center space-x-2 bg-green-500 text-white rounded-lg py-2 px-3 text-lg" @click="signIn()">
-			<span>Login</span>
-			</button>
-			<h1 v-if="status === 'authenticated'" class="text-lg">Authenticated</h1>
-			<h1 v-else>Not logged in</h1>
         </div>
         <div class="flex flex-col justify-center text-lighttext bg-secondarybackground mr-96 p-5 rounded-3xl">
             <p><u>Register</u></p>
@@ -40,7 +33,7 @@
                 <div>
                     <input :type="registerFieldType" v-model="registerPassword" spellcheck="false" autocomplete="off"
                     class="bg-primarybackground w-80 h-9 rounded-xl text-center pr-12" required>
-                    <span @click="toggleRegisterPassword" class="absolute -ml-10">
+                    <span @click="toggleRegisterPassword" class="absolute -ml-10 cursor-pointer">
                       	<Icon :name="`${registerEyeIcon}`"></Icon>
                     </span>
                 </div>
@@ -62,7 +55,7 @@
         ],
     })
 
-    const { status, signOut, signIn } = useSession()
+    const { status, signIn } = useSession()
 
     let registerUsername = ref("")
     let registerPassword = ref("")

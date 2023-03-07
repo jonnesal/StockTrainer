@@ -1,15 +1,14 @@
 <template>
   <div class="flex flex-col justify-center min-h-screen items-center text-center text-lighttext gap-3">
-
     <component :is="ChartLineComponent" />
-
   </div>
 </template>
 
 <script setup>
-//Saako dataa {{ users }}
 
 import ChartLine from "./components/LineChart.vue"
+
+definePageMeta({ middleware: 'auth' })
 
 let ChartLineComponent = ChartLine;
 
@@ -20,9 +19,8 @@ useHead ({
     ],
 })
 
-//console.log(users._value);
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>
