@@ -26,6 +26,6 @@ model user {
   id              Int         @id @default(autoincrement())
   username        String      @unique @db.VarChar(50)
   password        String      @db.VarChar(255)
-  available_money Decimal     @default(10000) @db.Decimal(10, 3)
+  available_money Decimal     @default(100000) @db.Decimal(10, 3)
   portfolio       portfolio[]
 }

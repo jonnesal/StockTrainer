@@ -11,9 +11,18 @@
         <div style="display: flex; justify-content: space-between; width: 200px;" class="gap-2">
           <button class="bg-green-700 rounded-xl border-2" style="color: white; width: 100px;height: 50px " @click="buy()">Buy</button>
           <button class="bg-red-700 rounded-xl border-2" style="color: white; width: 100px;height: 50px" @click="sell()">Sell</button>
+          <button class="bg-red-700 rounded-xl border-2" style="color: white; width: 100px;height: 50px" @click="resetMoney()">refresh</button>
         </div>
+
+          <label for="username">Username</label>
+
+          <button type="submit" value="registerNewUser">
+            <span class="border-lighttext border-2 p-2 rounded-xl bg-primarybackground hover:bg-buttonbackground transition-colors duration-150">Register</span>
+          </button>
+
       </div>
     </div>
+
     <div style="display: flex; flex-direction: column; width: 30%; margin-top: 10px;">
       <h3 style="margin-bottom: 10px; font-size: 24px;border: 1px solid black;">Bank value: {{ moneyAmount }}€</h3>
       <ul style="width: 40%;" class="pl-10">
@@ -33,6 +42,7 @@ import {
   PointElement,
   LineElement,
 } from 'chart.js';
+import router from "#app/plugins/router.mjs";
 
 Chart.register(
   LineController,
@@ -99,17 +109,20 @@ const options = ref({
 });
 
 const listItems = ref(["Bought and sold stocks"]);
-
 //Saa stockAmount input fieldist
 const stockAmount = ref("")
-const newItem = ref()
 
-const buyNewStock = async () => {
+
+const buyNewStock = async (stockAmount, price) => {
+
   try {
     const body = {
-      stock_owned: stockAmount.value,
+      stock_owned: "FTSE 100",
+      shares_owned: stockAmount,
+      buy_price: price
     }
-    await fetch(`/user`, {
+    console.log(body);
+    await fetch(`/portfolio`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
@@ -123,14 +136,15 @@ const buyNewStock = async () => {
   } catch (error) {
     console.error(error)
   }
+
 }
-
-
-function buy() {
+  function buy() {
 
   if(stockAmount.value !== undefined && stockAmount.value !== 0 && stockAmount.value !== "") {
+
     const newItem = `Bought ${stockAmount.value} stocks for ${ stockAmount.value * lastValue.value.toFixed(2) + "€"}`;
-    listItems.value.push(newItem);
+    listItems.value.push(newItem, lastValue.value);
+    buyNewStock(stockAmount.value, lastValue.value.toFixed(2));
     if(listItems.value.length >= 9) {
       listItems.value.shift();
     }
