@@ -29,21 +29,6 @@ app.get('/testi/main', async  (req, res) => {
   const API_KEY = 'IVMY38CL0NQHZ412';
   let API_URL;
 
-
-   API_URL = `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=EUR&apikey=${API_KEY}`;
-
-  axios.get(API_URL)
-    .then(response => {
-      const data = response.data['Realtime Currency Exchange Rate'];
-      const fromCurrency = data['1. From_Currency Code'];
-      const toCurrency = data['3. To_Currency Code'];
-      const exchangeRate = data['5. Exchange Rate'];
-      console.log(`1 ${fromCurrency} = ${exchangeRate} ${toCurrency}`);
-    })
-    .catch(error => {
-      console.error(error);
-    });
-
   const currentDate = new Date();
   const year = currentDate.getFullYear();
   const month = (currentDate.getMonth() ).toString().padStart(2, '0');
@@ -61,13 +46,14 @@ app.get('/testi/main', async  (req, res) => {
   axios.get(API_URL)
     .then(response => {
       const data = response.data;
-      const firstTenItems = data.feed.slice(0, 5);
-
+      const firstTenItems = data.feed.slice(0, 10);
+      console.log(firstTenItems);
       const simplifiedList = firstTenItems.map(item => {
         return {
           title: item.title,
           url: item.url,
           summary: item.summary,
+          image: item.banner_image,
           overall_sentiment_label: item.overall_sentiment_label
         };
       });
@@ -86,7 +72,7 @@ app.get('/testi/main', async  (req, res) => {
 
 app.get('/testi/topindex', async (req, res) => {
 
-
+/*
   let indexData = [];
 
 
@@ -189,7 +175,7 @@ app.get('/testi/topindex', async (req, res) => {
 //Tulokset tulee eriaikaan joten sleeppaan 0.2s
   async function demo() {
     for (let i = 0; i < 5; i++) {
-      await sleep(i * 20);
+      await sleep(i * 10);
     }
     res.json(indexData)
   }
@@ -197,6 +183,8 @@ app.get('/testi/topindex', async (req, res) => {
   await demo();
 
 
+
+ */
 
 
 

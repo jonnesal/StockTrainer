@@ -15,9 +15,9 @@
 
 <script setup>
 
-const news = useFetch('http://localhost:3001/testi/main')
+const news = await useFetch('http://localhost:3001/testi/main')
 const items = news.data?._value || []
-const topIndex = useFetch('http://localhost:3001/testi/topindex')
+const topIndex = await useFetch('http://localhost:3001/testi/topindex')
 const indexValues = topIndex.data._value;
 console.log(indexValues)
 //const indexItems = topIndex.data._value;

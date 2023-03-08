@@ -3,7 +3,10 @@
     <h1 class="text-6xl">// This is the homepage for StockTrainer //</h1>
     <h2 class="text-3xl">Learn to manage, buy and sell stocks without risk!</h2>
     <div class="flex justify-end w-full">
-      <NewsList />
+      <div class="news-list">
+        <NewsCard v-for="(item, index) in items" :key="index" :item="item" />
+      </div>
+
     </div>
   </div>
 </template>
@@ -11,13 +14,11 @@
 
 
 <script setup>
-import ChartLine from "./components/LineChart.vue"
 
+import NewsCard from './components/NewsCard.vue';
 
-let ChartLineComponent = ChartLine;
-
-import NewsList from "./components/MainNewsList.vue"
-
+const news = await useFetch('http://localhost:3001/testi/main')
+const items = news.data?._value || []
 useHead ({
     title: "Home | StockTrainer",
     meta: [

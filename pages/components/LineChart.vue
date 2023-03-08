@@ -100,8 +100,31 @@ const options = ref({
 
 const listItems = ref(["Bought and sold stocks"]);
 
+//Saa stockAmount input fieldist
 const stockAmount = ref("")
 const newItem = ref()
+
+const buyNewStock = async () => {
+  try {
+    const body = {
+      stock_owned: stockAmount.value,
+    }
+    await fetch(`/user`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+      .then(()=>{
+        router.push({ path: '/' })
+      })
+      .catch((error)=>{
+        console.error(error);
+      })
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 
 function buy() {
 
