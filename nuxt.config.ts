@@ -7,7 +7,6 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     '@sidebase/nuxt-auth',
   ],
-
   googleFonts: {
     families: {
       'Ubuntu Mono': true
