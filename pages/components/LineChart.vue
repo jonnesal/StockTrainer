@@ -44,13 +44,19 @@ Chart.register(
   LineElement
 );
 
+
+
+const listItems = ref(["Stocks exchanged"]);
+//Saa stockAmount input fieldist
+const stockAmount = ref("")
+let moneyAmount = ref(100000);
+
 let users1 = await useFetch('http://localhost:3001/testi/api');
 const users = users1.data.value;
 const currentTime = new Date();
 const timeList = [];
 
-//TÄÄ muutetaan dabase rahamäärällä
-let moneyAmount = ref(10000);
+
 
 for (let i = 30; i >= 1; i--) {
   const time = new Date(currentTime.getTime() - i * 60 * 1000);
@@ -100,10 +106,31 @@ const options = ref({
   },
 });
 
-const listItems = ref(["Stocks exchanged"]);
-//Saa stockAmount input fieldist
-const stockAmount = ref("")
+function storeToken() {
+  if (process.client) {
+    const savedListItems = localStorage.getItem('listItems');
+    if (savedListItems) {
+      const listItems1 = JSON.parse(savedListItems);
+      listItems.value = listItems1;
+    }
+    const savedMoney = localStorage.getItem('moneyAmount');
+    if(savedMoney) {
+      moneyAmount.value = savedMoney;
+    }
 
+  }
+}
+
+
+onMounted(() => {
+  storeToken();
+});
+
+
+
+function resetMoney() {
+  moneyAmount.value = 100000;
+}
 const buyNewStock = async (stockAmount, price) => {
   try {
     const body = {
@@ -117,9 +144,6 @@ const buyNewStock = async (stockAmount, price) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
-      .then(()=>{
-        router.push({ path: '/' })
-      })
       .catch((error)=>{
         console.error(error);
       })
@@ -128,10 +152,20 @@ const buyNewStock = async (stockAmount, price) => {
   }
 }
 
+//TÄÄ muutetaan dabase rahamäärällä
+
+
 function buy() {
-  if(stockAmount.value !== undefined && stockAmount.value !== 0 && stockAmount.value !== "") {
+  if(stockAmount.value !== undefined && stockAmount.value !== 0 && stockAmount.value !== "" && moneyAmount.value >= (stockAmount.value * lastValue.value.toFixed(2))) {
     const newItem = `BOUGHT ${stockAmount.value} FOR ${ stockAmount.value * lastValue.value.toFixed(2) + "€"}`;
+    moneyAmount.value = moneyAmount.value - (stockAmount.value * lastValue.value.toFixed(2));
     listItems.value.push(newItem);
+
+    if (process.client) {
+      localStorage.setItem('listItems', JSON.stringify(listItems.value));
+      localStorage.setItem('moneyAmount', moneyAmount.value);
+    }
+
     buyNewStock(stockAmount.value, lastValue.value.toFixed(2));
     if(listItems.value.length >= 9) {
       listItems.value.shift();
