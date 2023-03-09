@@ -8,25 +8,17 @@
           <label for="itemName" style="margin-bottom: 5px;">Amount</label>
           <input type="number" min="0" id="itemName" v-model="stockAmount" style="margin-bottom: 10px" class="border-lighttext border-2 text-center rounded-xl bg-primarybackground hover:bg-buttonbackground transition-colors duration-150">
         </div>
-        <div style="display: flex; justify-content: space-between; width: 200px;" class="gap-2">
-          <button class="bg-green-700 rounded-xl border-2" style="color: white; width: 100px;height: 50px " @click="buy()">Buy</button>
-          <button class="bg-red-700 rounded-xl border-2" style="color: white; width: 100px;height: 50px" @click="sell()">Sell</button>
-          <button class="bg-red-700 rounded-xl border-2" style="color: white; width: 100px;height: 50px" @click="resetMoney()">refresh</button>
+        <div style="display: flex; justify-content: space-between; width: auto;" class="gap-2">
+          <button class="bg-green-700 rounded-xl border-2 pl-2 pr-2" style="color: white; width: auto; height: 50px " @click="buy()">Buy</button>
+          <button class="bg-red-700 rounded-xl border-2 pl-2 pr-2" style="color: white; width: auto; height: 50px" @click="sell()">Sell</button>
         </div>
-
-          <label for="username">Username</label>
-
-          <button type="submit" value="registerNewUser">
-            <span class="border-lighttext border-2 p-2 rounded-xl bg-primarybackground hover:bg-buttonbackground transition-colors duration-150">Register</span>
-          </button>
-
       </div>
     </div>
-
-    <div style="display: flex; flex-direction: column; width: 30%; margin-top: 10px;">
-      <h3 style="margin-bottom: 10px; font-size: 24px;border: 1px solid black;">Bank value: {{ moneyAmount }}€</h3>
-      <ul style="width: 40%;" class="pl-10">
-        <li v-for="(item, index) in listItems" :key="index" style="font-size: 24px;" class="border-2 bg-primarybackground rounded-xl">{{ item }}</li>
+    <div style="display: flex; flex-direction: column; margin-top: 10px;">
+      <p class="border-2 ml-10 bg-primarybackground rounded-xl mb-3 w-auto">Bank value<br>{{ moneyAmount }}€</p>
+      <button class="bg-blue-700 rounded-xl border-2 pl-2 pr-2 ml-10 mb-3" style="color: white; width: auto; height: 50px" @click="resetMoney()">Reset money</button>
+      <ul style="height: 21rem" class="pl-10 overflow-y-auto">
+        <li v-for="(item, index) in listItems" :key="index" class="border-2 bg-primarybackground rounded-xl mt-3 mb-3 w-80">{{ item }}</li>
       </ul>
     </div>
   </div>
@@ -58,7 +50,7 @@ const currentTime = new Date();
 const timeList = [];
 
 //TÄÄ muutetaan dabase rahamäärällä
-let moneyAmount = ref(1000);
+let moneyAmount = ref(10000);
 
 for (let i = 30; i >= 1; i--) {
   const time = new Date(currentTime.getTime() - i * 60 * 1000);
@@ -108,13 +100,11 @@ const options = ref({
   },
 });
 
-const listItems = ref(["Bought and sold stocks"]);
+const listItems = ref(["Stocks exchanged"]);
 //Saa stockAmount input fieldist
 const stockAmount = ref("")
 
-
 const buyNewStock = async (stockAmount, price) => {
-
   try {
     const body = {
       stock_owned: "FTSE 100",
@@ -136,40 +126,36 @@ const buyNewStock = async (stockAmount, price) => {
   } catch (error) {
     console.error(error)
   }
-
 }
-  function buy() {
 
+function buy() {
   if(stockAmount.value !== undefined && stockAmount.value !== 0 && stockAmount.value !== "") {
-
-    const newItem = `Bought ${stockAmount.value} stocks for ${ stockAmount.value * lastValue.value.toFixed(2) + "€"}`;
-    listItems.value.push(newItem, lastValue.value);
+    const newItem = `BOUGHT ${stockAmount.value} FOR ${ stockAmount.value * lastValue.value.toFixed(2) + "€"}`;
+    listItems.value.push(newItem);
     buyNewStock(stockAmount.value, lastValue.value.toFixed(2));
     if(listItems.value.length >= 9) {
       listItems.value.shift();
     }
   }
-
-
 }
 
 function sell() {
   if(stockAmount.value !== undefined && stockAmount.value !== 0 && stockAmount.value !== "") {
-    const newItem = `Sold ${stockAmount.value} stocks for ${stockAmount.value * lastValue.value.toFixed(2) + "€"}`;
-
+    const newItem = `SOLD ${stockAmount.value} FOR ${stockAmount.value * lastValue.value.toFixed(2) + "€"}`;
     listItems.value.push(newItem);
     if (listItems.value.length >= 9) {
       listItems.value.shift();
     }
   }
-
 }
 
 </script>
 
 <style scoped>
-.lines li {
-  color: #fff;
-  margin-bottom: 5px;
-}
+
+  .lines li {
+    color: #fff;
+    margin-bottom: 5px;
+  }
+
 </style>

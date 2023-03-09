@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col justify-center min-h-screen items-center text-center text-lighttext">
-    <component :is="ChartLineComponent" class="max-w-[80%] bg-secondarybackground pb-56 p-12 rounded-3xl"/>
+    <component :is="ChartLineComponent" class="max-w-[80%] bg-secondarybackground pb-36 p-12 rounded-3xl"/>
   </div>
 </template>
 
