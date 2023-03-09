@@ -34,7 +34,6 @@ import {
   PointElement,
   LineElement,
 } from 'chart.js';
-import router from "#app/plugins/router.mjs";
 
 Chart.register(
   LineController,
@@ -130,6 +129,8 @@ onMounted(() => {
 
 function resetMoney() {
   moneyAmount.value = 100000;
+  localStorage.clear();
+
 }
 const buyNewStock = async (stockAmount, price) => {
   try {
@@ -176,7 +177,14 @@ function buy() {
 function sell() {
   if(stockAmount.value !== undefined && stockAmount.value !== 0 && stockAmount.value !== "") {
     const newItem = `SOLD ${stockAmount.value} FOR ${stockAmount.value * lastValue.value.toFixed(2) + "€"}`;
+    moneyAmount.value = moneyAmount.value + (stockAmount.value * lastValue.value.toFixed(2));
     listItems.value.push(newItem);
+
+    if (process.client) {
+      localStorage.setItem('listItems', JSON.stringify(listItems.value));
+      localStorage.setItem('moneyAmount', moneyAmount.value);
+    }
+
     if (listItems.value.length >= 9) {
       listItems.value.shift();
     }
