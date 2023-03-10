@@ -1,29 +1,11 @@
 const express = require('express')
 const cors = require('cors');
-// Create an Express app
 const app = express()
 const axios = require('axios');
+
 app.use(cors());
-// Define a simple API route
-app.get('/testi/example', (req, res) => {
-  const testi = [
-    { id: 1, name: 'John Doe' },
-    { id: 2, name: 'Jane Smith' }
-  ]
-  res.json(testi)
-})
 
-app.post('/testi/users', (req, res) => {
-  let body = req.body
-  console.log(body)
-})
-
-app.get('/testi/users', (req, res) => {
-  let body = req.body
-  console.log(body)
-})
-
-app.get('/testi/main', async  (req, res) => {
+app.get('/stocks/main', async  (req, res) => {
 
 
   const API_KEY = 'IVMY38CL0NQHZ412';
@@ -70,7 +52,7 @@ app.get('/testi/main', async  (req, res) => {
 
 })
 
-app.get('/testi/topindex', async (req, res) => {
+app.get('/stocks/topindex', async (req, res) => {
 
 /*
   let indexData = [];
@@ -179,19 +161,15 @@ app.get('/testi/topindex', async (req, res) => {
     }
     res.json(indexData)
   }
-
   await demo();
-
-
-
  */
 
 
-
+  //Tää sais usa, asia, aj euroopan stock markettejen yleis suunnan. mutta ei ollu aikaa laittaa toimiin frond-endis
 })
 
 
-app.get('/testi/api',async (req, res) => {
+app.get('/stocks/api',async (req, res) => {
 
   //Otetaan viimesen tunnin kurssi
   //FTSE On lontoon pörssin suurin osakeindexsi ilmasella ei saa hyvin yksittäisiä osakkeita kuten AAPL
@@ -209,9 +187,11 @@ app.get('/testi/api',async (req, res) => {
       const data = response.data;
       const price = data.chart.result[0].indicators.quote[0].close;
       //Jos haet tätä stockmarkertin sulkeutumisen jälkeen niin saat nämä basic arvot
+
+
       if(price === undefined) {
-        let emt;
-        emt = [7899.31982421875, 7899.97998046875,
+        let mockdata;
+        mockdata = [7899.31982421875, 7899.97998046875,
           7900.43017578125, 7902.0498046875,
           7902.93994140625, 7903.18017578125,
           7903.83984375,    7903.85986328125,
@@ -221,8 +201,8 @@ app.get('/testi/api',async (req, res) => {
           null,             7904.2998046875]
 
 
-        res.json(emt);
-        console.log(emt);
+        res.json(mockdata);
+        console.log(mockdata);
       }else{
         res.json(price);
       }

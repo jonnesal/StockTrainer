@@ -50,7 +50,7 @@ const listItems = ref(["Stocks exchanged"]);
 const stockAmount = ref("")
 let moneyAmount = ref(100000);
 
-let users1 = await useFetch('http://localhost:3001/testi/api');
+let users1 = await useFetch('http://localhost:3001/stocks/api');
 const users = users1.data.value;
 const currentTime = new Date();
 const timeList = [];

@@ -22,7 +22,7 @@
 
 import NewsCard from './components/NewsCard.vue';
 
-const news = await useFetch('http://localhost:3001/testi/main')
+const news = await useFetch('http://localhost:3001/stocks/main')
 const items = news.data?._value || []
 useHead ({
     title: "Home | StockTrainer",

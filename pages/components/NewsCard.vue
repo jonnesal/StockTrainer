@@ -2,7 +2,7 @@
   <div class="info-card border-2 rounded-xl text-lighttext p-4">
     <img v-if="item.image" class="" :src="item.image" alt="News image">
     <div class="info-card-content">
-      <a :href="item.url" class="info-card-title">{{ item.title }}</a>
+      <a :href="item.url" target=”_blank” class="info-card-title">{{ item.title }}</a>
       <p class="info-card-summary p-2">{{ item.summary }}</p>
       <p class="info-card-sentiment p-2">Overall sentiment: {{ item.overall_sentiment_label }}</p>
     </div>
