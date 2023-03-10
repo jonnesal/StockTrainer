@@ -1,0 +1,60 @@
+Endpointit
+http://localhost:3001
+http://localhost:3001/stocks/trainer
+
+API Kutsut:
+
+GET  /main
+{
+title: "Dogecoin hits 4-month lows vs. Bitcoin - 50% DOGE price rebound now in play",
+url: "https://cointelegraph.com/news/dogecoin-hits-4-month-lows-vs-bitcoin-50-doge-price-rebound-now-in-play",
+summary: "The prospects of Elon Musk abandoning Dogecoin would be dire for DOGE price in both Bitcoin and USD terms.",
+image: "https://s3.cointelegraph.com/uploads/2023-03/3ff6a81d-31f7-4627-9058-2cd6b4e38b1c.png",
+overall_sentiment_label: "Neutral"
+},
+
+POST /userPortfolio
+Tämä kutsu luo uuden kentän tietokantaan
+
+{stock_owned: 'FTSE 100', shares_owned: 1, buy_price: '7738.07', user_id: 1}
+
+
+
+
+GET /portfolio
+Tämä kutsu palauttaa portfolion
+{
+id: 83,
+stock_owned: "FTSE 100",
+shares_owned: 1,
+buy_price: "7738.07",
+user_id: 1
+},
+
+
+
+GET / trainer
+Tämä kutsu paluattaa tietoa '^FTSE' index rahaston 30minuutin viimeaikaisista muutoksista
+
+7750.2001953125,
+7749.2099609375,
+7747.93017578125,
+7749.52978515625,
+7749.81982421875,
+7751.5, etc...
+
+
+DELETE /sell/stock/{id}
+
+Poistaa käyttäjän järjestelmästä käyttäjän tunnusnumeron perusteella.
+
+
+Datan postaminen tietokannasta toimii vain manuaalisesti valitettavasti.
+
+
+
+
+
+
+
+
