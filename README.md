@@ -18,6 +18,12 @@ pnpm install
 ```
 
 ## Development Server
+Start
+
+Express:
+
+node/server/server.js
+
 
 Start the development server on http://localhost:3000
 

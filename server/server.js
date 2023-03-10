@@ -248,6 +248,22 @@ app.get('/stocks/trainer',async (req, res) => {
 
 //API KEY  IVMY38CL0NQHZ412
 })
+
+//Tarvis taas sen id:
+app.delete('/stocks/sell/stock',async (req, res) => {
+
+  try {
+    const portfolio = await prisma.portfolio.delete( {
+      where: {id: 1 }
+    })
+    //Ei ole yhdistetty muuhun työhön
+    res.json(portfolio)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Error 500' })
+  }
+
+})
 // Start the server
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {

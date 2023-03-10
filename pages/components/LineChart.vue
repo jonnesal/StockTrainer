@@ -165,7 +165,7 @@ const buyNewStock = async (stockAmount, price) => {
       buy_price: price
     }
     console.log(body);
-    await fetch(`http://localhost:3001/stocks/userPortfolio`, {
+    await fetch(`http://localhost:3001/stocks/sell/stock`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
@@ -177,9 +177,6 @@ const buyNewStock = async (stockAmount, price) => {
     console.error(error)
   }
 }
-
-//TÄÄ muutetaan dabase rahamäärällä
-
 
 function buy() {
   if(stockAmount.value !== undefined && stockAmount.value !== 0 && stockAmount.value !== "" && moneyAmount.value >= (stockAmount.value * lastValue.value.toFixed(2))) {
