@@ -2,18 +2,18 @@
 
 Learn to manage, buy and sell stocks without risk!
 
-## Images
+# Images
 
-# Homepage
+## Homepage
 ![image](https://user-images.githubusercontent.com/38233746/224381909-4889a606-d9db-4c81-9633-c43db874c34a.png)
 
-# Login and register
+## Login and register
 ![image](https://user-images.githubusercontent.com/38233746/224381947-9c80c7c5-920d-4b8d-9232-2174ba5bb03a.png)
 
-# Trainer
+## Trainer
 ![image](https://user-images.githubusercontent.com/38233746/224381967-c7f2933d-e032-4e17-8971-fbd3c39894ae.png)
 
-# About
+## About
 ![image](https://user-images.githubusercontent.com/38233746/224381997-f21ef3c2-078c-4131-afb9-5fcbded020f1.png)
 
 ## Setup
