@@ -50,7 +50,9 @@ const listItems = ref(["Stocks exchanged"]);
 const stockAmount = ref("")
 let moneyAmount = ref(100000);
 
-let users1 = await useFetch('http://localhost:3001/stocks/api');
+let users1 = await useFetch('http://localhost:3001/stocks/trainer');
+let portfoli = await useFetch('http://localhost:3001/stocks/portfolio');
+console.log(portfoli);
 const users = users1.data.value;
 const currentTime = new Date();
 const timeList = [];
@@ -132,7 +134,7 @@ function resetMoney() {
   localStorage.clear();
 
 }
-const buyNewStock = async (stockAmount, price) => {
+/*const buyNewStock = async (stockAmount, price) => {
   try {
     const body = {
       stock_owned: "FTSE 100",
@@ -141,6 +143,29 @@ const buyNewStock = async (stockAmount, price) => {
     }
     console.log(body);
     await fetch(`/portfolio`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+      .catch((error)=>{
+        console.error(error);
+      })
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+ */
+
+const buyNewStock = async (stockAmount, price) => {
+  try {
+    const body = {
+      stock_owned: "FTSE 100",
+      shares_owned: stockAmount,
+      buy_price: price
+    }
+    console.log(body);
+    await fetch(`http://localhost:3001/stocks/userPortfolio`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),

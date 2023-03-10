@@ -2,9 +2,43 @@ const express = require('express')
 const cors = require('cors');
 const app = express()
 const axios = require('axios');
-
+const { PrismaClient } = require('@prisma/client')
+const bodyParser = require("body-parser");
+const prisma = new PrismaClient()
 app.use(cors());
 
+
+app.post('/stocks/userPortfolio', bodyParser.json(), async (req, res) => {
+  const { stock_owned, shares_owned, buy_price } = req.body
+
+  try {
+    const portfolio = await prisma.portfolio.create({
+      data: {
+        stock_owned,
+        shares_owned,
+        buy_price
+      }
+    })
+    res.json(portfolio)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Failed to create portfolio record' })
+  }
+})
+
+//Koska user tehdään jossain muualla nuxt auth kanssa niin ei oo mitään ideaa miten tämä pitäs liittää siihe käyttäjän omistamaan id:hen.
+app.get('/stocks/portfolio', async (req, res) => {
+  try {
+    const portfolio = await prisma.portfolio.findMany( {
+      where: {stock_owned: ('FTSE 100')}
+    })
+    //where id:
+    res.json(portfolio)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Error 500' })
+  }
+})
 app.get('/stocks/main', async  (req, res) => {
 
 
@@ -169,7 +203,7 @@ app.get('/stocks/topindex', async (req, res) => {
 })
 
 
-app.get('/stocks/api',async (req, res) => {
+app.get('/stocks/trainer',async (req, res) => {
 
   //Otetaan viimesen tunnin kurssi
   //FTSE On lontoon pörssin suurin osakeindexsi ilmasella ei saa hyvin yksittäisiä osakkeita kuten AAPL
